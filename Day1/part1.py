@@ -13,5 +13,4 @@ for line in lines:
         count = count + 1
     previous = int(line)
 
-count = count - 1
-print(count)
+print(count - 1)
