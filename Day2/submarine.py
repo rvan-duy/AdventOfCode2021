@@ -1,16 +1,17 @@
 class Submarine:
-    depth = 0
-    horizontal = 0
-    aim = 0
+    def __init__(self):
+        self.depth = 0
+        self.horizontal = 0
+        self.aim = 0
 
-    def apply_instruction(self, instruction):
-        if instruction[0] == 'forward':
-            self.horizontal += instruction[1]
-            self.depth += self.aim * instruction[1]
-        elif instruction[0] == 'down':
-            self.aim += instruction[1]
-        elif instruction[0] == 'up':
-            self.aim -= instruction[1]
+    def apply_instruction(self, instruction, value):
+        if instruction == 'forward':
+            self.horizontal += value
+            self.depth += self.aim * value
+        elif instruction == 'down':
+            self.aim += value
+        elif instruction == 'up':
+            self.aim -= value
 
     def print_position(self):
         print('Horizontal position:', self.horizontal)

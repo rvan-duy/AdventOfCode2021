@@ -1,14 +1,19 @@
 from submarine import Submarine
 
-f = open('input.txt')
-instructions = f.readlines()
-f.close()
 
+def get_instructions_from_file(filename):
+    file = open(filename)
+    result = file.readlines()
+    file.close()
+    return result
+
+
+instructions = get_instructions_from_file('input.txt')
 uboat = Submarine()
 
 for instruction in instructions:
-    list_item = instruction.split(' ')
-    list_item[1] = int(list_item[1][:-1])
-    uboat.apply_instruction(list_item)
+    instruction, value = instruction.split(' ')
+    value = int(value[:-1])
+    uboat.apply_instruction(instruction, value)
 
 uboat.print_position()
