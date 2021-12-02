@@ -14,7 +14,6 @@ array_len = len(lines)
 i = 0
 while i < array_len - 2:
     window_sum = lines[i] + lines[i + 1] + lines[i + 2]
-    print(window_sum)
     if window_sum > prev_sum:
         count += 1
     prev_sum = window_sum
