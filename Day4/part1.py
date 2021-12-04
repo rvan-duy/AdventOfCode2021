@@ -30,15 +30,49 @@ def create_boards(unstructured_boards):
         for j in range(len(structured_board[i])):
             structured_board[i][j] = list(structured_board[i][j].split())
 
-    print(structured_board)
     return structured_board
 
 
+# Looks for the row and col on the board that contains the number
 def find_row_and_col(number, board):
     for row in board:
         for element in row:
             if element == number:
-                return row.index(), element.index()
+                return board.index(row), row.index(element)
+    return -1, -1
+
+
+def check_horizontal_bingo(sequence, row):
+    count = 0
+    for element in row:
+        for number in sequence:
+            if number == element:
+                count += 1
+    if count == len(row):
+        return True
+    else:
+        return False
+
+
+def check_vertical_bingo(sequence, board, col):
+    count = 0
+    for row in board:
+        for number in sequence:
+            if number == row[col]:
+                count += 1
+    if count == len(board):
+        return True
+    else:
+        return False
+
+
+def calculate_sum_of_unmarked_number(board, chosen_numbers):
+    sum = 0
+    for row in board:
+        for element in row:
+            if element not in chosen_numbers:
+                sum += int(element)
+    return sum
 
 
 file = open('input.txt', 'r')
@@ -54,11 +88,14 @@ for number in sequence:
     chosen_numbers.append(number)
     for board in boards:
         row, col = find_row_and_col(number, board)
-
-# print(boards)
-print(find_row_and_col(63, boards[0]))
-
-# print(sequence)
-
-# print(amount_of_boards)
-# print(boards)
+        print(len(boards))
+        if check_horizontal_bingo(chosen_numbers, board[row]):
+            if len(boards) == 1:
+                print("Score of last board:",
+                      calculate_sum_of_unmarked_number(board, chosen_numbers) * int(chosen_numbers[-1]))
+            boards.remove(board)
+        elif check_vertical_bingo(chosen_numbers, board, col):
+            if len(boards) == 1:
+                print("Score of last board:",
+                      calculate_sum_of_unmarked_number(board, chosen_numbers) * int(chosen_numbers[-1]))
+            boards.remove(board)
