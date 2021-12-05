@@ -1,4 +1,4 @@
-file = open('simple_input.txt')
+file = open('input.txt')
 file_input = file.readlines()
 file.close()
 
@@ -22,13 +22,21 @@ while x < max_x + 1:
     x += 1
 
 for entry in file_input:
-    if entry[0][0] != entry[1][0] and entry[0][1] != entry[1][1]:
-        # print(range(min(int(entry[0][0]), int(entry[1][0])), max(int(entry[0][0]), int(entry[1][0]))))
-        start_x = int(entry[0][0])
-        start_y = int(entry[0][])
-        end = int(entry[1][0])
-        while start != end:
 
+    if entry[0][0] != entry[1][0] and entry[0][1] != entry[1][1]:
+        # print(entry)
+        start_x = int(entry[0][1])
+        start_y = int(entry[0][0])
+        end_x = int(entry[1][1])
+        end_y = int(entry[1][0])
+        x_modifier = -1 if start_x > end_x else 1
+        y_modifier = -1 if start_y > end_y else 1
+        while start_x != end_x and start_y != end_y:
+            # print(start_x, start_y)
+            diagram[start_x][start_y] += 1
+            start_x += x_modifier
+            start_y += y_modifier
+        diagram[start_x][start_y] += 1
     elif entry[0][0] != entry[1][0]:
         end = max(int(entry[0][0]), int(entry[1][0]))
         start = min(int(entry[0][0]), int(entry[1][0]))
