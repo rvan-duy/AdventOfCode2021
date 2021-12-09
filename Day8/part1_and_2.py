@@ -1,4 +1,4 @@
-inputty = open('marius_input.txt', 'r')
+inputty = open('input.txt', 'r')
 lines = inputty.readlines()
 
 
