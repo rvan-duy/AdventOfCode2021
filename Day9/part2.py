@@ -1,4 +1,4 @@
-niet_input = open('simple_input.txt', 'r')
+niet_input = open('input.txt', 'r')
 heightmap = niet_input.readlines()
 niet_input.close()
 
@@ -12,48 +12,41 @@ for i in range(1, len(heightmap) - 1):
     heightmap[i] = [10] + heightmap[i] + [10]
 
 
-def floodfill(heightmap, x, y):
-    print(type(heightmap[x][y]))
-    if heightmap[x][y] < 9:
+def floodfill(x, y, heightmap):
+    basin_size = 0
+    if heightmap[x][y] < 9 and \
+            heightmap[x][y] < heightmap[x - 1][y] and \
+            heightmap[x][y] < heightmap[x + 1][y] and \
+            heightmap[x][y] < heightmap[x][y - 1] and \
+            heightmap[x][y] < heightmap[x][y + 1]:
+        basin_size += 1
         heightmap[x][y] += 20
-        floodfill(x, y + 1, heightmap)
-        floodfill(x, y - 1, heightmap)
-        floodfill(x + 1, y, heightmap)
-        floodfill(x - 1, y, heightmap)
+        basin_size += floodfill(x, y + 1, heightmap)
+        basin_size += floodfill(x, y - 1, heightmap)
+        basin_size += floodfill(x + 1, y, heightmap)
+        basin_size += floodfill(x - 1, y, heightmap)
+    return basin_size
 
 
-
+basin_sizes = []
 for i in range(1, len(heightmap) - 1):
     for k in range(1, len(heightmap[i]) - 1):
-        floodfill(heightmap, i, k)
-
-# for i in range(1, len(heightmap) - 1):
-#     for k in range(1, len(heightmap[i]) - 1):
-#         queue.append([i, k])
-#         print(queue)
-#         basin_size = 0
-#         for element in queue:
-#             if heightmap[queue[0][0]][queue[0][1]] < 9:
-#                 print("Test:", heightmap[queue[0][0]][queue[0][1]], heightmap[queue[0][0] + 1][queue[0][1]], heightmap[queue[0][0] - 1][queue[0][1]], heightmap[queue[0][0]][queue[0][1] - 1], heightmap[queue[0][0]][queue[0][1] + 1])
-#                 if heightmap[queue[0][0]][queue[0][1]] < heightmap[queue[0][0] - 1][queue[0][1]] and \
-#                         heightmap[queue[0][0]][queue[0][1]] < heightmap[queue[0][0] + 1][queue[0][1]] and \
-#                         heightmap[queue[0][0]][queue[0][1]] < heightmap[queue[0][0]][queue[0][1] - 1] and \
-#                         heightmap[queue[0][0]][queue[0][1]] < heightmap[queue[0][0]][queue[0][1] + 1]:
-#                     print(queue)
-#                     heightmap[[queue[0][0]][queue[0][1]]] += 20
-#                     print("Hello?")
-#                     basin_size += 1
-#                 queue.pop(0)
-#
-#
-#                 # heightmap[i][k] += 20
-#                 # queue.append([i - 1, k])
-#                 # queue.append([i + 1, k])
-#                 # queue.append([i, k - 1])
-#                 # queue.append([i, k + 1])
-#                 # basin_size += 4
+        basin_size = floodfill(i, k, heightmap)
+        if basin_size != 0:
+            basin_sizes.append(basin_size)
 
 for row in heightmap:
     print(row)
 
-print("Sum:", basin_size)
+final_basin_sizes = []
+for i in range(0, 3):
+    max = 0
+    for j in range(len(basin_sizes)):
+        if basin_sizes[j] > max:
+            max = basin_sizes[j]
+
+    basin_sizes.remove(max)
+    final_basin_sizes.append(max)
+
+print("final_basin_sizes", final_basin_sizes)
+print(9 * 14 * 9)
