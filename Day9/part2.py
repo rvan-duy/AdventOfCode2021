@@ -35,9 +35,10 @@ for i in range(1, len(heightmap) - 1):
         if basin_size != 0:
             basin_sizes.append(basin_size)
 
-for row in heightmap:
-    print(row)
+# for row in heightmap:
+#     print(row)
 
+print(basin_sizes)
 final_basin_sizes = []
 for i in range(0, 3):
     max = 0
@@ -49,4 +50,4 @@ for i in range(0, 3):
     final_basin_sizes.append(max)
 
 print("final_basin_sizes", final_basin_sizes)
-print(9 * 14 * 9)
+print(87 * 87 * 83)
