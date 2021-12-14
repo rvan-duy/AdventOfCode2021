@@ -1,4 +1,4 @@
-input_file = open('vinnie_innie.txt', 'r')
+input_file = open('input.txt', 'r')
 template = list(input_file.readline()[:-1])
 input_file.readline()
 insertions = input_file.read().split('\n')[:-1]
